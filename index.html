@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>FreeAI — Free AI Chat · No Limits · No Subscriptions · No Ads</title>
+<meta name="description" content="FreeAI looks and feels like ChatGPT, but it's free forever: unlimited messages, unlimited images, every free AI model, code written & run for you. No sign-up, no subscriptions, no ads." />
+<meta property="og:title" content="FreeAI — Free AI Chat, No Limits" />
+<meta property="og:description" content="Unlimited AI chat + image generation + code that runs itself. Free forever, no ads, no sign-up." />
+<meta property="og:type" content="website" />
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
+<link rel="manifest" href="manifest.webmanifest" />
+<meta name="theme-color" content="#212121" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" />
+<link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+<div id="app">
+  <!-- ═══════════ SIDEBAR ═══════════ -->
+  <aside id="sidebar" aria-label="Chats">
+    <div class="side-top">
+      <a class="brand" href="#" id="brandHome">
+        <img src="assets/logo.svg" alt="" class="brand-logo" />
+        <span class="brand-name">Free<span class="brand-ai">AI</span></span>
+      </a>
+      <button class="icon-btn" id="collapseBtn" title="Close sidebar" aria-label="Close sidebar">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="3"/><line x1="10" y1="4" x2="10" y2="20"/></svg>
+      </button>
+    </div>
+
+    <button id="newChatBtn" class="side-row new-chat">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+      <span>New chat</span>
+      <kbd>Ctrl K</kbd>
+    </button>
+
+    <div class="side-search">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
+      <input id="searchInput" type="search" placeholder="Search chats" autocomplete="off" />
+    </div>
+
+    <nav id="chatList" class="chat-list" aria-label="Chat history"></nav>
+
+    <div class="side-bottom">
+      <div class="free-card">
+        <div class="free-card-title">✨ Free Forever plan</div>
+        <ul>
+          <li>∞ Unlimited messages</li>
+          <li>∞ Unlimited images</li>
+          <li>🚫 No ads · No subscription</li>
+          <li>🔓 No sign-up needed</li>
+        </ul>
+      </div>
+      <a id="supportBtn" class="side-row support hidden" href="#" target="_blank" rel="noopener">
+        <span id="supportLabel">❤️ Support the creator</span>
+      </a>
+      <button id="settingsBtn" class="side-row">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.2a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.2a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3h0a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.2a1.7 1.7 0 0 0 1 1.5h0a1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9v0a1.7 1.7 0 0 0 1.5 1h.2a2 2 0 1 1 0 4h-.2a1.7 1.7 0 0 0-1.5 1z"/></svg>
+        <span>Settings &amp; models</span>
+      </button>
+      <div class="user-row">
+        <div class="avatar">G</div>
+        <div class="user-meta">
+          <div class="user-name">Guest</div>
+          <div class="user-plan">Free Forever · Unlimited</div>
+        </div>
+        <span class="badge-free">$0</span>
+      </div>
+    </div>
+  </aside>
+  <div id="sidebarBackdrop" class="backdrop hidden"></div>
+
+  <!-- ═══════════ MAIN ═══════════ -->
+  <main id="main">
+    <header id="topbar">
+      <div class="top-left">
+        <button class="icon-btn" id="openSidebarBtn" title="Open sidebar" aria-label="Open sidebar">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+        </button>
+
+        <div class="model-wrap">
+          <button id="modelBtn" class="model-btn" aria-haspopup="listbox" aria-expanded="false">
+            <span id="modelName">FreeAI</span>
+            <span class="badge-free">FREE · ∞</span>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div id="modelMenu" class="dropdown hidden" role="listbox" aria-label="Choose a model">
+            <div class="dropdown-head">
+              <span>Choose a model — all free</span>
+              <button id="refreshModelsBtn" class="mini-btn" title="Fetch the latest model list from the provider">↻ Refresh</button>
+            </div>
+            <input id="modelSearch" type="search" placeholder="Search models…" autocomplete="off" />
+            <div id="modelList" class="model-list"></div>
+            <div class="dropdown-foot">
+              Provider: <b id="providerName">FreeAI Free</b> ·
+              <button id="openSettingsFromModels" class="link-btn">More providers &amp; keys</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="top-right">
+        <button class="icon-btn" id="exportBtn" title="Download this chat (.md)" aria-label="Download chat">
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        </button>
+        <button class="pill-btn" id="shareBtn">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+          Share
+        </button>
+        <button class="icon-btn" id="topNewChatBtn" title="New chat" aria-label="New chat">
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <div id="chatScroll">
+      <!-- Empty / welcome state -->
+      <section id="emptyState">
+        <img src="assets/logo.svg" alt="FreeAI" class="hero-logo" />
+        <h1>What can I help with?</h1>
+        <p class="hero-sub">
+          <span class="chip">∞ No limits</span>
+          <span class="chip">💸 No subscriptions</span>
+          <span class="chip">🚫 No ads</span>
+          <span class="chip">🤖 Every free model</span>
+          <span class="chip">💻 Code written &amp; run for you</span>
+        </p>
+        <div class="suggestions">
+          <button class="suggest" data-mode="code" data-prompt="Build me a complete, beautiful to-do list web app in a single HTML file. Write all the code for me — I'll run it with the Preview button.">
+            <span class="s-emoji">💻</span><span class="s-title">Build an app for me</span><span class="s-sub">Code written &amp; runnable instantly</span>
+          </button>
+          <button class="suggest" data-mode="image" data-prompt="A futuristic Kolkata skyline at sunset, Howrah Bridge, monsoon clouds, cinematic, ultra detailed">
+            <span class="s-emoji">🎨</span><span class="s-title">Create an image</span><span class="s-sub">Free &amp; unlimited pictures</span>
+          </button>
+          <button class="suggest" data-prompt="Write a professional resume summary for a fresher software developer applying for web development jobs.">
+            <span class="s-emoji">✍️</span><span class="s-title">Write for me</span><span class="s-sub">Essays, emails, resumes, stories</span>
+          </button>
+          <button class="suggest" data-prompt="Explain photosynthesis like I'm 10 years old, with a fun example.">
+            <span class="s-emoji">🎓</span><span class="s-title">Explain anything</span><span class="s-sub">Simple answers, any topic</span>
+          </button>
+          <button class="suggest" data-prompt="Give me 10 low-cost online business ideas I can start from home in India, with first steps for each.">
+            <span class="s-emoji">💡</span><span class="s-title">Business ideas</span><span class="s-sub">Plans, names &amp; first steps</span>
+          </button>
+          <button class="suggest" data-prompt="Solve step by step: A train travels 240 km in 3 hours, then 180 km in 2 hours. What is its average speed for the whole journey?">
+            <span class="s-emoji">🧮</span><span class="s-title">Solve step by step</span><span class="s-sub">Maths, homework &amp; reasoning</span>
+          </button>
+        </div>
+      </section>
+
+      <section id="messages" aria-live="polite"></section>
+    </div>
+
+    <!-- Composer -->
+    <div id="composerWrap">
+      <div id="modeChips" class="mode-chips"></div>
+      <div id="attachChips" class="attach-chips"></div>
+
+      <div id="composer">
+        <textarea id="input" rows="1" placeholder="Ask anything…  (free, unlimited)" aria-label="Message FreeAI"></textarea>
+        <div class="composer-bar">
+          <div class="composer-left">
+            <div class="plus-wrap">
+              <button class="tool-btn" id="plusBtn" title="Add — attach, image, code mode" aria-haspopup="menu" aria-expanded="false">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </button>
+              <div id="plusMenu" class="dropdown up hidden" role="menu">
+                <button class="menu-item" id="attachMenuBtn">📎 <span>Attach a file</span><small>txt, md, code, csv, json, images</small></button>
+                <button class="menu-item" id="imageModeBtn">🎨 <span>Create image mode</span><small id="imageModeState">Off — next message becomes a picture</small></button>
+                <button class="menu-item" id="codeModeBtn">💻 <span>Build-it-for-me mode</span><small id="codeModeState">Off — AI writes complete runnable code</small></button>
+              </div>
+            </div>
+            <span class="composer-hint" id="composerHint">FreeAI · Free forever</span>
+          </div>
+          <div class="composer-right">
+            <button class="tool-btn" id="micBtn" title="Voice typing" aria-label="Voice typing">
+              <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
+            </button>
+            <button id="sendBtn" class="send-btn" title="Send" aria-label="Send message" disabled>
+              <svg id="sendIcon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+              <svg id="stopIcon" class="hidden" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <p class="disclaimer">FreeAI can make mistakes. Check important info. · <b>Free forever — no limits, no subscriptions, no ads, no sign-up.</b></p>
+    </div>
+  </main>
+
+  <!-- ═══════════ LIVE PREVIEW PANEL (code runs itself) ═══════════ -->
+  <aside id="previewPanel" class="hidden" aria-label="Live preview">
+    <div class="preview-head">
+      <span>▶ Live preview <small>— your code, running itself</small></span>
+      <div>
+        <button class="mini-btn" id="previewNewTabBtn">Open full page ↗</button>
+        <button class="mini-btn" id="previewDownloadBtn">Download .html</button>
+        <button class="icon-btn" id="previewCloseBtn" aria-label="Close preview">✕</button>
+      </div>
+    </div>
+    <iframe id="previewFrame" title="Code preview" sandbox="allow-scripts allow-modals allow-forms allow-popups"></iframe>
+  </aside>
+</div>
+
+<!-- ═══════════ SETTINGS MODAL ═══════════ -->
+<div id="settingsModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+  <div class="modal-card">
+    <div class="modal-head">
+      <h2 id="settingsTitle">Settings</h2>
+      <button class="icon-btn" id="settingsCloseBtn" aria-label="Close settings">✕</button>
+    </div>
+
+    <div class="modal-body">
+      <h3>🤖 AI provider — where the free models come from</h3>
+      <label class="field">
+        <span>Provider</span>
+        <select id="providerSelect">
+          <option value="pollinations">FreeAI Free (Pollinations) — no key, no sign-up ✅ default</option>
+          <option value="openrouter">OpenRouter — 100s of models, many 100% free (free key)</option>
+          <option value="groq">Groq — super-fast Llama / DeepSeek (free key)</option>
+          <option value="custom">Custom OpenAI-compatible API (your own endpoint)</option>
+        </select>
+      </label>
+      <p class="help" id="providerHelp"></p>
+
+      <label class="field" id="apiKeyField">
+        <span>API key <small>(stored only in your browser, never sent anywhere else)</small></span>
+        <input id="apiKeyInput" type="password" placeholder="sk-…" autocomplete="off" />
+      </label>
+
+      <div id="customFields" class="hidden">
+        <label class="field">
+          <span>Base URL</span>
+          <input id="customBaseInput" type="url" placeholder="https://api.example.com/v1" />
+        </label>
+        <label class="field">
+          <span>Model name</span>
+          <input id="customModelInput" type="text" placeholder="model-name" />
+        </label>
+      </div>
+
+      <h3>🎛️ Behaviour</h3>
+      <label class="field">
+        <span>Creativity (temperature): <b id="tempValue">0.7</b></span>
+        <input id="tempInput" type="range" min="0" max="2" step="0.1" value="0.7" />
+      </label>
+      <label class="field">
+        <span>System prompt <small>(how FreeAI should behave)</small></span>
+        <textarea id="systemPromptInput" rows="3"></textarea>
+      </label>
+      <label class="field inline">
+        <span>Theme</span>
+        <select id="themeSelect">
+          <option value="dark">Dark (like ChatGPT)</option>
+          <option value="light">Light</option>
+        </select>
+      </label>
+
+      <h3>❤️ Creator / monetization (optional)</h3>
+      <p class="help">FreeAI has <b>no ads and no subscriptions</b>, so it earns ₹0 by itself.
+        If you deploy your own copy, paste your donation link (Ko-fi, Buy Me a Coffee, PayPal, Razorpay/UPI page…) in
+        <code>js/config.js</code> and a Support button appears for every visitor. The field below overrides it on this device only.
+        Read the honest money math in <code>README.md</code> before believing anyone promising “₹35k per user”.</p>
+      <label class="field">
+        <span>Your support / donation link (this device)</span>
+        <input id="supportUrlInput" type="url" placeholder="https://ko-fi.com/yourname" />
+      </label>
+
+      <h3>ℹ️ About</h3>
+      <p class="help" id="aboutText">
+        FreeAI is a free, open-source ChatGPT-style front-end. It talks directly from your browser to free AI providers —
+        there is no FreeAI server, no account, no tracking, and your chats &amp; keys never leave this browser.
+        “Every model” = every model those free providers expose (the list is fetched live in the model picker),
+        plus anything you plug in with your own free API key.
+      </p>
+
+      <div class="danger-zone">
+        <button class="danger-btn" id="clearAllBtn">🗑 Delete all chats &amp; settings on this device</button>
+      </div>
+    </div>
+
+    <div class="modal-foot">
+      <button class="pill-btn ghost" id="settingsCancelBtn">Cancel</button>
+      <button class="pill-btn primary" id="settingsSaveBtn">Save settings</button>
+    </div>
+  </div>
+</div>
+
+<input type="file" id="fileInput" class="hidden" multiple accept=".txt,.md,.csv,.json,.js,.ts,.py,.html,.css,.xml,.log,.png,.jpg,.jpeg,.webp,.gif" />
+<div id="toasts" aria-live="polite"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.6/purify.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
