@@ -1,0 +1,12 @@
+{
+  "name": "FreeAI — Free AI Chat, No Limits",
+  "short_name": "FreeAI",
+  "description": "Chat with AI models for free. No limits, no subscriptions, no ads, no sign-up.",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#212121",
+  "theme_color": "#212121",
+  "icons": [
+    { "src": "assets/logo.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
