@@ -20,6 +20,45 @@ against **free AI providers**, so it costs you **₹0/$0 to host and ₹0/$0 to 
 | 🔒 Private by design | No FreeAI server, no accounts, no tracking. API keys & chats never leave the device |
 | 📱 Works everywhere | Installable PWA, responsive, dark (default) + light theme |
 
+## 🎨 Create Studio — make anything
+
+The **Create Studio** tab (sidebar or `#studio`) makes real downloadable files, instantly, in the browser:
+
+| Maker | What you get |
+|---|---|
+| 🎮 Game | Playable Snake / Flappy / Breakout / Memory (.html) — or describe any game and the AI builds it |
+| 🖼️ Images | AI pictures with styles (photo/anime/pixel/3D…), up to 4 at a time |
+| 🎬 Video | Photos / AI images / text slides → downloadable `.webm` video (recorded with the Canvas + MediaRecorder APIs) |
+| 🍿 Movie | Your story, one scene per line → AI paints each scene → Ken-Burns film with title & credits, recorded to `.webm` |
+| ⛏️ Minecraft Mod | Real Fabric mod project (.zip) with your custom item in Java + build guide to a .jar |
+| 🧩 Minecraft Datapack | Vanilla datapack (.zip): welcome message, keep-inventory, starter kit, custom recipe |
+| 🧱 Resource Pack | Rename items + paint your own 16×16 textures on the pixel canvas → ready-to-install pack |
+| 🌅 Shader Pack | Working GLSL colour-grade shaders (vibrant/sunset/night/horror/retro) for Iris/OptiFine |
+| 📦 Modpack | Search Modrinth, add Mods, export a real `.mrpack` (Modrinth App / Prism Launcher import it and download everything) |
+| 🖥️ OS | A web OS in one file: desktop, draggable windows, taskbar, Notepad/Calculator/Paint |
+| 💾 Software | To-do, calculator, notepad, Pomodoro timer, password generator |
+| 🌐 Browser | Your own browser shell with address bar & search (sites that block framing open externally) |
+| 🤖 Your Own AI | Downloadable personal chatbot with your name/personality, powered by the same free engine |
+| 🌍 Website | Landing page / portfolio / restaurant / shop in one click |
+
+Every maker’s output can be **previewed in-app**, **downloaded**, and **sent to the AI chat** to be improved/extended.
+
+## 🔌 Connect Apps
+
+The **Connect Apps** tab (sidebar or `#apps`) connects 7 services — honestly labelled by how each one really works:
+
+| App | How it connects |
+|---|---|
+| 💚 **Modrinth** | ✅ Real public API, no key: search Mods/resource packs/shaders/modpacks/datapacks/plugins, direct downloads, “add to modpack” |
+| 🐙 **GitHub** | ✅ Real API: public repo search with no token; add your free Personal Access Token to browse your own repos |
+| ▶️ **YouTube** | ✅ Player works by link instantly; in-app search with your free YouTube Data API key |
+| 📁 **Google Drive** | ✅ Share-link preview/download instantly; full Drive via your own free Google OAuth Client ID (real Google sign-in, read-only, step-by-step guide in-app) |
+| 🔥 **CurseForge** | ✅ Real API with your free CurseForge API key (or one-click web search without one) |
+| ☁️ **Terabox** | ⚠️ Terabox has **no public API** (never give any site your Terabox password). FreeAI keeps your share links organised, one tap to open |
+| 💜 **Lovable** | ⚠️ Lovable has **no public API**. FreeAI writes/copies your app prompt and opens Lovable, and saves your project links |
+
+All keys/tokens are stored **only in the visitor’s browser** (`localStorage`) and sent only to that service’s own API.
+
 ## 🚀 Put it online for free (2 minutes)
 
 **Option A — GitHub Pages (recommended):**
@@ -87,10 +126,13 @@ Zero build step, zero dependencies to install: vanilla HTML/CSS/JS +
 [highlight.js](https://highlightjs.org) from CDN. All AI calls go browser → provider directly.
 
 ```
-index.html            # ChatGPT-style UI
+index.html            # ChatGPT-style UI + Studio & Apps views
 css/styles.css        # Dark/light ChatGPT-like theme
 js/config.js          # ← owner settings (support link etc.)
-js/app.js             # chat engine, streaming, images, code runner
+js/app.js             # chat engine, streaming, images, code runner (window.FreeAI API)
+js/templates.js       # instant generators: games, apps, web OS, browser, AI, websites
+js/studio.js          # 🎨 Create Studio (video/movie recorder, Minecraft zip builders…)
+js/apps.js            # 🔌 Connect Apps (Modrinth/GitHub/YouTube/Drive/CurseForge/…)
 assets/logo.svg       # logo / favicon / PWA icon
 manifest.webmanifest  # installable app
 ```

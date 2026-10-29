@@ -973,3 +973,6 @@ function init() {
   $("#input").focus();
 }
 document.addEventListener("DOMContentLoaded", init);
+
+/* Public API for Create Studio (studio.js) & Connect Apps (apps.js) */
+window.FreeAI = { toast, openPreview, closePreview, download, send, setCodeMode, setImageMode, setSidebar, newChat };
